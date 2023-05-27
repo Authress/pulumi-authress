@@ -15,8 +15,8 @@
 package main
 
 import (
-	authressPulumi "github.com/authress/pulumi-authress/provider"
-	"github.com/authress/pulumi-authress/provider/pkg/version"
+	authressPulumi "github.com/Authress/pulumi-authress/provider"
+	"github.com/Authress/pulumi-authress/provider/pkg/version"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfgen"
 )
 

@@ -4,7 +4,7 @@ The Authress Pulumi provider to automatically configure Authress from Pulumi.
 [![GitHub Workflow][workflow]][workflow-link] [![Forums][discuss-badge]][discuss] [![Pulumi][pulumi-badge]][pulumi-link]
 
 [workflow]: https://github.com/authress/pulumi-provider-authress/actions/workflows/build.yml/badge.svg
-[workflow-link]: https://github.com/Authress/pulumi-provider-authress/actions
+[workflow-link]: https://github.com/authress/pulumi-provider-authress/actions
 
 [discuss-badge]: https://img.shields.io/badge/build-pulumi--authress-623CE4.svg
 [discuss]: https://discuss.hashicorp.com/c/pulumi-providers/31

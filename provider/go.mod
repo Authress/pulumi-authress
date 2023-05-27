@@ -1,4 +1,4 @@
-module github.com/authress/pulumi-authress/provider
+module github.com/Authress/pulumi-authress/provider
 
 go 1.18
 
@@ -41,6 +41,7 @@ require (
 	github.com/apparentlymart/go-cidr v1.1.0 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/armon/go-radix v1.0.0 // indirect
+	github.com/authress/terraform-provider-authress v1.0.29 // indirect
 	github.com/aws/aws-sdk-go v1.40.34 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.9.0 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.7.0 // indirect
@@ -101,6 +102,8 @@ require (
 	github.com/hashicorp/hcl/v2 v2.14.0 // indirect
 	github.com/hashicorp/hil v0.0.0-20190212132231-97b3a9cdfa93 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
+	github.com/hashicorp/terraform-plugin-framework v1.1.1 // indirect
+	github.com/hashicorp/terraform-plugin-framework-validators v0.10.0 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.14.3 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.7.0 // indirect
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.23.0 // indirect

@@ -18,9 +18,8 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/authress/pulumi-authress/provider/pkg/version"
-	// Review the need for this dependency
-	"github.com/authress/terraform-provider-authress/authress"
+	"github.com/Authress/pulumi-authress/provider/pkg/version"
+	authressTerraformProvider "github.com/authress/terraform-provider-authress/src"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
@@ -47,7 +46,7 @@ func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) erro
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := shimv2.NewProvider(authress.Provider())
+	p := shimv2.NewProvider(authressTerraformProvider.Provider())
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
@@ -118,7 +117,7 @@ func Provider() tfbridge.ProviderInfo {
 		},
 		Golang: &tfbridge.GolangInfo{
 			ImportBasePath: filepath.Join(
-				fmt.Sprintf("github.com/Authress/pulumi-%[1]s/sdk/", mainPkg),
+				fmt.Sprintf("github.com/authress/pulumi-%[1]s/sdk/", mainPkg),
 				tfbridge.GetModuleMajorVersion(version.Version),
 				"go",
 				mainPkg,

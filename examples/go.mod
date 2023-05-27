@@ -1,3 +1,3 @@
-module github.com/authress/pulumi-authress/examples
+module github.com/Authress/pulumi-authress/examples
 
 go 1.18

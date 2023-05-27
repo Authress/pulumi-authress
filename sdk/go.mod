@@ -1,4 +1,4 @@
-module github.com/authress/pulumi-authress/sdk
+module github.com/Authress/pulumi-authress/sdk
 
 go 1.18
 
