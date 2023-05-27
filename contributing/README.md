@@ -1,6 +1,6 @@
 ## How to Contribute to the Authress Pulumi provider
 
-### Prerequisites
+## Prerequisites
 
 Ensure the following tools are installed and present in your `$PATH`:
 
@@ -12,3 +12,16 @@ Ensure the following tools are installed and present in your `$PATH`:
 - [TypeScript](https://www.typescriptlang.org/)
 - [Python](https://www.python.org/downloads/) (called as `python3`).  For recent versions of MacOS, the system-installed version is fine.
 - [.NET](https://dotnet.microsoft.com/download)
+
+## Development
+
+### Install necessary Go packages:
+```sh
+cd provider && go mod tidy
+```
+
+### Regenerate TF conversion
+
+```sh
+make tfgen
+```

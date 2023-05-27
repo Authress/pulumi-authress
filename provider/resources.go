@@ -18,12 +18,13 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/Authress/pulumi-authress/provider/pkg/version"
+	"github.com/authress/pulumi-authress/provider/pkg/version"
+	// Review the need for this dependency
+	"github.com/authress/terraform-provider-authress/authress"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
-	"github.com/terraform-providers/terraform-provider-authress/authress"
 )
 
 // all of the token components used below.
@@ -52,35 +53,19 @@ func Provider() tfbridge.ProviderInfo {
 	prov := tfbridge.ProviderInfo{
 		P:    p,
 		Name: "authress",
-		// DisplayName is a way to be able to change the casing of the provider
-		// name when being displayed on the Pulumi registry
-		DisplayName: "",
-		// The default publisher for all packages is Pulumi.
-		// Change this to your personal name (or a company name) that you
-		// would like to be shown in the Pulumi Registry if this package is published
-		// there.
-		Publisher: "Pulumi",
-		// LogoURL is optional but useful to help identify your package in the Pulumi Registry
-		// if this package is published there.
-		//
-		// You may host a logo on a domain you control or add an SVG logo for your package
-		// in your repository and use the raw content URL for that file as your logo URL.
-		LogoURL: "",
-		// PluginDownloadURL is an optional URL used to download the Provider
-		// for use in Pulumi programs
-		// e.g https://github.com/org/pulumi-provider-name/releases/
-		PluginDownloadURL: "",
-		Description:       "A Pulumi package for creating and managing authress cloud resources.",
-		// category/cloud tag helps with categorizing the package in the Pulumi Registry.
-		// For all available categories, see `Keywords` in
+		DisplayName: "Authress",
+		Publisher: "Authress",
+		// Deployed from the Authress Restrict UI
+		LogoURL: "https://authress.io/app/img/logo.svg",
+		// https://www.pulumi.com/docs/using-pulumi/pulumi-packages/how-to-author/#support-for-github-releases
+		PluginDownloadURL: "github://api.github.com/Authress/pulumi-authress",
+		Description:       "A Pulumi package for creating and managing Authress resources.",
 		// https://www.pulumi.com/docs/guides/pulumi-packages/schema/#package.
-		Keywords:   []string{"pulumi", "authress", "category/cloud"},
+		Keywords:   []string{"pulumi", "authress", "category/cloud", "authorization", "authentication"},
 		License:    "Apache-2.0",
-		Homepage:   "https://www.pulumi.com",
+		Homepage:   "https://authress.io",
 		Repository: "https://github.com/Authress/pulumi-authress",
-		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
-		// should match the TF provider module's require directive, not any replace directives.
-		GitHubOrg: "",
+		GitHubOrg: "Authress",
 		Config:    map[string]*tfbridge.SchemaInfo{
 			// Add any required configuration here, or remove the example below if
 			// no additional points are required.

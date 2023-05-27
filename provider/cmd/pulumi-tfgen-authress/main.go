@@ -15,12 +15,12 @@
 package main
 
 import (
-	authress "github.com/Authress/pulumi-authress/provider"
-	"github.com/Authress/pulumi-authress/provider/pkg/version"
+	authressPulumi "github.com/authress/pulumi-authress/provider"
+	"github.com/authress/pulumi-authress/provider/pkg/version"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfgen"
 )
 
 func main() {
 	// Modify the path to point to the new provider
-	tfgen.Main("authress", version.Version, authress.Provider())
+	tfgen.Main("authress", version.Version, authressPulumi.Provider())
 }
