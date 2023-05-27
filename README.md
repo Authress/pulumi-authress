@@ -23,13 +23,13 @@ This package is available for several languages/platforms:
 To use from JavaScript or TypeScript in Node.js, install using either `npm`:
 
 ```bash
-npm install @authress/pulumi
+npm install @pulumi/authress
 ```
 
 or `yarn`:
 
 ```bash
-yarn add @authress/pulumi
+yarn add @pulumi/authress
 ```
 
 ### Python
@@ -45,7 +45,7 @@ pip install pulumi_authress
 To use from Go, use `go get` to grab the latest version of the library:
 
 ```bash
-go get github.com/Authress/pulumi-authress/sdk/go/...
+go get github.com/Authress/pulumi-authress/sdk/go
 ```
 
 ### .NET
@@ -62,26 +62,10 @@ The following configuration points are available for the `Authress` provider:
 
 - `authress:custom_domain` - Your Authress custom domain, configured at https://authress.io/app/#/settings?focus=domain
 
-## Reference
+## Reference Examples
 
 For detailed reference documentation, please visit [the Pulumi registry](https://www.pulumi.com/registry/packages/authress/api-docs/).
 
-
-## Usage Example
-
-```hcl
-pulumi {
-  required_providers {
-    authress = {
-      source  = "authress/authress"
-    }
-  }
-}
-
-provider "authress" {
-  custom_domain = "https://login.company.com"
-}
-```
 
 
 ## Contributing

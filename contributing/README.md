@@ -18,7 +18,7 @@ Ensure the following tools are installed and present in your `$PATH`:
 ### Install necessary Go packages:
 
 ```sh
-export $PATH="~/git/authress/sdk/pulumi:$PATH"
+export PATH="~/git/authress/sdk/pulumi:$PATH"
 cd provider && go mod tidy
 ```
 

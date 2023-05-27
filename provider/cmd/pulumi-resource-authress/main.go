@@ -17,17 +17,23 @@
 package main
 
 import (
+	"context"
 	_ "embed"
 
 	authressPulumi "github.com/Authress/pulumi-authress/provider"
-	"github.com/Authress/pulumi-authress/provider/pkg/version"
-	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
+	tfbridge "github.com/pulumi/pulumi-terraform-bridge/pf/tfbridge"
 )
 
 //go:embed schema-embed.json
 var pulumiSchema []byte
 
+//go:embed bridge-metadata.json
+var bridgeMetadata []byte
+
 func main() {
-	// Modify the path to point to the new provider
-	tfbridge.Main("authress", version.Version, authressPulumi.Provider(), pulumiSchema)
+	meta := tfbridge.ProviderMetadata{
+		PackageSchema:  pulumiSchema,
+		BridgeMetadata: bridgeMetadata,
+	}
+	tfbridge.Main(context.Background(), "authress", authressPulumi.Provider(), meta)
 }

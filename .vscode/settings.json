@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
-        "Pulumi"
+        "Pulumi",
+        "tfbridge",
+        "tfgen"
     ]
 }

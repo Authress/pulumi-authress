@@ -15,42 +15,42 @@
 package authress
 
 import (
+	// embed is used to store bridge-metadata.json in the compiled binary
+	_ "embed"
+
 	"fmt"
 	"path/filepath"
+	"unicode"
 
 	"github.com/Authress/pulumi-authress/provider/pkg/version"
 	authressTerraformProvider "github.com/authress/terraform-provider-authress/src"
-	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
-	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
-	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
+	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
+
+	pf "github.com/pulumi/pulumi-terraform-bridge/pf/tfbridge"
+	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 )
 
 // all of the token components used below.
 const (
 	// This variable controls the default name of the package in the package
 	// registries for nodejs and python:
-	mainPkg = "authress"
+	authressProvider = "authress"
 	// modules:
 	mainMod = "index" // the authress module
 )
 
-// preConfigureCallback is called before the providerConfigure function of the underlying provider.
-// It should validate that the provider can be configured, and provide actionable errors in the case
-// it cannot be. Configuration variables can be read from `vars` using the `stringValue` function -
-// for example `stringValue(vars, "accessKey")`.
-func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) error {
-	return nil
-}
+// // preConfigureCallback is called before the providerConfigure function of the underlying provider.
+// // It should validate that the provider can be configured, and provide actionable errors in the case
+// // it cannot be. Configuration variables can be read from `vars` using the `stringValue` function -
+// // for example `stringValue(vars, "accessKey")`.
+// func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) error {
+// 	return nil
+// }
 
 // Provider returns additional overlaid schema and metadata associated with the provider..
-func Provider() tfbridge.ProviderInfo {
-	// Instantiate the Terraform provider
-	p := shimv2.NewProvider(authressTerraformProvider.New())
-
-	// Create a Pulumi provider mapping
-	prov := tfbridge.ProviderInfo{
-		P:    p,
+func Provider() pf.ProviderInfo {
+	info := tfbridge.ProviderInfo{
 		Name: "authress",
 		DisplayName: "Authress",
 		Publisher: "Authress",
@@ -65,36 +65,32 @@ func Provider() tfbridge.ProviderInfo {
 		Homepage:   "https://authress.io",
 		Repository: "https://github.com/Authress/pulumi-authress",
 		GitHubOrg: "Authress",
-		Config:    map[string]*tfbridge.SchemaInfo{
-			// Add any required configuration here, or remove the example below if
-			// no additional points are required.
-			// "region": {
-			// 	Type: tfbridge.MakeType("region", "Region"),
-			// 	Default: &tfbridge.DefaultInfo{
-			// 		EnvVars: []string{"AWS_REGION", "AWS_DEFAULT_REGION"},
-			// 	},
-			// },
+		Version:      version.Version,
+
+		MetadataInfo: tfbridge.NewProviderMetadata(metadata),
+		Resources: map[string]*tfbridge.ResourceInfo{
+			"random_id":       {Tok: randomResource(mainMod, "RandomId")},
+			"random_password": {Tok: randomResource(mainMod, "RandomPassword")},
+			"random_pet":      {Tok: randomResource(mainMod, "RandomPet")},
+			"random_shuffle":  {Tok: randomResource(mainMod, "RandomShuffle")},
+			"random_integer":  {Tok: randomResource(mainMod, "RandomInteger")},
+			"random_uuid":     {Tok: randomResource(mainMod, "RandomUuid")},
+
+			"random_string": {
+				Tok: randomResource(mainMod, "RandomString"),
+				PreStateUpgradeHook: func(args tfbridge.PreStateUpgradeHookArgs) (int64, resource.PropertyMap, error) {
+					// States for RandomString may be contaminated by
+					// https://github.com/pulumi/pulumi-random/issues/258 bug where the state is
+					// missing the version marker. Pretend that these states are at V1, which is the
+					// best guess. V1->V2/V3 migrations seem idempotent, this is probably safe.
+					if args.PriorStateSchemaVersion == 0 {
+						return 1, args.PriorState, nil
+					}
+					return args.PriorStateSchemaVersion, args.PriorState, nil
+				},
+			},
 		},
-		PreConfigureCallback: preConfigureCallback,
-		Resources:            map[string]*tfbridge.ResourceInfo{
-			// Map each resource in the Terraform provider to a Pulumi type. Two examples
-			// are below - the single line form is the common case. The multi-line form is
-			// needed only if you wish to override types or other default options.
-			//
-			// "aws_iam_role": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "IamRole")}
-			//
-			// "aws_acm_certificate": {
-			// 	Tok: tfbridge.MakeResource(mainPkg, mainMod, "Certificate"),
-			// 	Fields: map[string]*tfbridge.SchemaInfo{
-			// 		"tags": {Type: tfbridge.MakeType(mainPkg, "Tags")},
-			// 	},
-			// },
-		},
-		DataSources: map[string]*tfbridge.DataSourceInfo{
-			// Map each resource in the Terraform provider to a Pulumi function. An example
-			// is below.
-			// "aws_ami": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getAmi")},
-		},
+
 		JavaScript: &tfbridge.JavaScriptInfo{
 			// List any npm dependencies and their versions
 			Dependencies: map[string]string{
@@ -117,10 +113,10 @@ func Provider() tfbridge.ProviderInfo {
 		},
 		Golang: &tfbridge.GolangInfo{
 			ImportBasePath: filepath.Join(
-				fmt.Sprintf("github.com/authress/pulumi-%[1]s/sdk/", mainPkg),
+				fmt.Sprintf("github.com/pulumi/pulumi-%[1]s/sdk/", authressProvider),
 				tfbridge.GetModuleMajorVersion(version.Version),
 				"go",
-				mainPkg,
+				authressProvider,
 			),
 			GenerateResourceContainerTypes: true,
 		},
@@ -128,10 +124,33 @@ func Provider() tfbridge.ProviderInfo {
 			PackageReferences: map[string]string{
 				"Pulumi": "3.*",
 			},
+			Namespaces: map[string]string{
+				"authress": "Authress",
+			},
 		},
 	}
-
-	prov.SetAutonaming(255, "-")
-
-	return prov
+	return pf.ProviderInfo{
+		ProviderInfo: info,
+		NewProvider:  authressTerraformProvider.New(),
+	}
 }
+
+// randomMember manufactures a type token for the random package and the given module and type.
+func randomMember(mod string, mem string) tokens.ModuleMember {
+	return tokens.ModuleMember(authressProvider + ":" + mod + ":" + mem)
+}
+
+// randomType manufactures a type token for the random package and the given module and type.
+func randomType(mod string, typ string) tokens.Type {
+	return tokens.Type(randomMember(mod, typ))
+}
+
+// randomResource manufactures a standard resource token given a module and resource name.  It automatically uses the
+// random package and names the file by simply lower casing the resource's first character.
+func randomResource(mod string, res string) tokens.Type {
+	fn := string(unicode.ToLower(rune(res[0]))) + res[1:]
+	return randomType(mod+"/"+fn, res)
+}
+
+// go:embed cmd/pulumi-resource-authress/bridge-metadata.json
+var metadata []byte
