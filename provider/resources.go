@@ -46,7 +46,7 @@ func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) erro
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := shimv2.NewProvider(authressTerraformProvider.Provider())
+	p := shimv2.NewProvider(authressTerraformProvider.New())
 
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{

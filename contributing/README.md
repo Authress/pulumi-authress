@@ -16,11 +16,14 @@ Ensure the following tools are installed and present in your `$PATH`:
 ## Development
 
 ### Install necessary Go packages:
+
 ```sh
+export $PATH="~/git/authress/sdk/pulumi:$PATH"
 cd provider && go mod tidy
 ```
 
 ### Regenerate TF conversion
+Blocked on https://github.com/pulumi/pulumi-terraform-bridge/issues/956
 
 ```sh
 make tfgen

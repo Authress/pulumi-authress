@@ -1,32 +1,3 @@
-### Composing the Provider Code - Prerequisites
-
-Pulumi provider repositories have the following general structure:
-
-- `examples/` contains sample code which may optionally be included as integration tests to be run as part of a CI/CD pipeline.
-- `provider/` contains the Go code used to create the provider as well as generate the SDKs in the various languages that Pulumi supports.
-  - `provider/cmd/pulumi-tfgen-foo` generates the Pulumi resource schema (`schema.json`), based on the Terraform provider's resources.
-  - `provider/cmd/pulumi-resource-foo` generates the SDKs in all supported languages from the schema, placing them in the `sdk/` folder.
-  - `provider/pkg/resources.go` is the location where we will define the Terraform-to-Pulumi mappings for resources.
-- `sdk/` contains the generated SDK code for each of the language platforms that Pulumi supports, with each supported platform in a separate subfolder.
-
-1. In `provider/go.mod`, add a reference to the upstream Terraform provider in the `require` section, e.g.
-
-    ```go
-    github.com/foo/terraform-provider-foo v0.4.0
-    ```
-
-1. In `provider/resources.go`, ensure the reference in the `import` section uses the correct Go module path, e.g.:
-
-    ```go
-    github.com/foo/terraform-provider-foo/foo
-    ```
-
-1. Download the dependencies:
-
-    ```bash
-    cd provider && go mod tidy && cd -
-    ```
-
 1. Create the schema by running the following command:
 
     ```bash
@@ -382,3 +353,6 @@ cd provider && go mod tidy
 
 ```
 <!-- markdownlint-enable MD010 -->
+
+## Do this
+https://www.pulumi.com/docs/using-pulumi/pulumi-packages/how-to-author/#support-for-github-releases
