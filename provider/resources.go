@@ -1,8 +1,10 @@
 package authress
 
 import (
+	"path/filepath"
 	// embed is used to store bridge-metadata.json in the compiled binary
 	_ "embed"
+	"fmt"
 
 	"github.com/Authress/pulumi-authress/provider/pkg/version"
 	authressTerraformProvider "github.com/authress/terraform-provider-authress/src"
@@ -46,6 +48,16 @@ func Provider() pf.ProviderInfo {
 		Repository: "https://github.com/Authress/pulumi-authress",
 		GitHubOrg: "Authress",
 		Version:      version.Version,
+
+		Config: map[string]*tfbridge.SchemaInfo{
+			// These are dynamically imported from the TF provider
+			// "customDomain": {
+			// 	Default: &tfbridge.DefaultInfo{},
+			// },
+			// "accessKey": {
+			// 	Default: &tfbridge.DefaultInfo{EnvVars: []string{"AUTHRESS_KEY"}},
+			// },
+		},
 
 		MetadataInfo: tfbridge.NewProviderMetadata(metadata),
 		Resources: map[string]*tfbridge.ResourceInfo{
@@ -91,29 +103,29 @@ func Provider() pf.ProviderInfo {
 			// no overlay files.
 			//Overlay: &tfbridge.OverlayInfo{},
 		},
-		// Python: &tfbridge.PythonInfo{
-		// 	// List any Python dependencies and their version ranges
-		// 	Requires: map[string]string{
-		// 		"pulumi": ">=3.0.0,<4.0.0",
-		// 	},
-		// },
-		// Golang: &tfbridge.GolangInfo{
-		// 	ImportBasePath: filepath.Join(
-		// 		fmt.Sprintf("github.com/pulumi/pulumi-%[1]s/sdk/", authressProvider),
-		// 		tfbridge.GetModuleMajorVersion(version.Version),
-		// 		"go",
-		// 		authressProvider,
-		// 	),
-		// 	GenerateResourceContainerTypes: true,
-		// },
-		// CSharp: &tfbridge.CSharpInfo{
-		// 	PackageReferences: map[string]string{
-		// 		"Pulumi": "3.*",
-		// 	},
-		// 	Namespaces: map[string]string{
-		// 		"authress": "Authress",
-		// 	},
-		// },
+		Python: &tfbridge.PythonInfo{
+			// List any Python dependencies and their version ranges
+			Requires: map[string]string{
+				"pulumi": ">=3.0.0,<4.0.0",
+			},
+		},
+		Golang: &tfbridge.GolangInfo{
+			ImportBasePath: filepath.Join(
+				fmt.Sprintf("github.com/pulumi/pulumi-%[1]s/sdk/", authressProvider),
+				tfbridge.GetModuleMajorVersion(version.Version),
+				"go",
+				authressProvider,
+			),
+			GenerateResourceContainerTypes: true,
+		},
+		CSharp: &tfbridge.CSharpInfo{
+			PackageReferences: map[string]string{
+				"Pulumi": "3.*",
+			},
+			Namespaces: map[string]string{
+				"authress": "Authress",
+			},
+		},
 	}
 
 	return pf.ProviderInfo{

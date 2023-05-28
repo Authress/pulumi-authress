@@ -57,7 +57,7 @@ provider:: tfgen install_plugins # build the provider binary
 
 build_sdks:: install_plugins provider build_nodejs build_python build_go build_dotnet # build all the sdks
 
-build_nodejs:: VERSION := $(shell ./pulumictl get version --language javascript)
+build_nodejs:: VERSION ?= $(shell ./pulumictl get version --language javascript)
 build_nodejs:: install_plugins tfgen # build the node sdk
 	$(WORKING_DIR)/bin/$(TFGEN) nodejs --overlays provider/overlays/nodejs --out sdk/nodejs/
 	cd sdk/nodejs/ && \
@@ -107,6 +107,7 @@ clean::
 install_plugins::
 	[ -x $(shell which pulumi) ] || curl -fsSL https://get.pulumi.com | sh
 	pulumi plugin install resource random 4.3.1
+	pulumi plugin install resource pulumi-resource-authress ${VERSION}  --file ../../provider/cmd/pulumi-resource-authress
 
 install_dotnet_sdk::
 	mkdir -p $(WORKING_DIR)/nuget

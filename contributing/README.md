@@ -1,4 +1,5 @@
 ## How to Contribute to the Authress Pulumi provider
+The reference guide for building and publishing the package is available in the [Pulumi docs](https://www.pulumi.com/docs/using-pulumi/pulumi-packages/how-to-author/).
 
 ## Prerequisites
 
@@ -18,15 +19,17 @@ Ensure the following tools are installed and present in your `$PATH`:
 ### Install necessary Go packages:
 
 ```sh
-export PATH="~/git/authress/sdk/pulumi:$PATH"
-cd provider && go mod tidy
+cd provider
+go mod tidy
 ```
 
 ### Regenerate TF conversion
 Blocked on https://github.com/pulumi/pulumi-terraform-bridge/issues/956
 
 ```sh
-export VERSION=v1.1.1; make tfgen
+export VERSION=v1.1.1
+export PATH="/home/$USER/git/authress/sdk/pulumi/bin:/home/$USER/git/authress/sdk/pulumi/provider/cmd:$PATH"
+make tfgen
 make provider
 make build_nodejs
 ```
@@ -34,7 +37,6 @@ make build_nodejs
 ### Run an example
 
 ```sh
-export PATH="/home/$USER/git/authress/sdk/pulumi/bin:$PATH"
 make install_nodejs_sdk
 cd examples/typescript-example
 yarn
