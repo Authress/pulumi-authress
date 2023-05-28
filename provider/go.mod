@@ -1,11 +1,12 @@
 module github.com/Authress/pulumi-authress/provider
 
-go 1.18
+go 1.20
 
 replace github.com/hashicorp/terraform-plugin-sdk/v2 => github.com/pulumi/terraform-plugin-sdk/v2 v2.0.0-20220824175045-450992f2f5b9
 
 require (
 	github.com/authress/terraform-provider-authress v1.0.29
+	github.com/hashicorp/terraform-plugin-framework v1.1.1
 	github.com/pulumi/pulumi-terraform-bridge/pf v0.10.0
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.48.0
 	github.com/pulumi/pulumi/sdk/v3 v3.68.0
@@ -125,7 +126,6 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/hcl/v2 v2.16.2 // indirect
 	github.com/hashicorp/hil v0.0.0-20190212132231-97b3a9cdfa93 // indirect
-	github.com/hashicorp/terraform-plugin-framework v1.1.1 // indirect
 	github.com/hashicorp/terraform-plugin-framework-validators v0.10.0 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.14.3 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.7.0 // indirect
@@ -177,7 +177,7 @@ require (
 	github.com/pulumi/pulumi-java/pkg v0.9.2 // indirect
 	github.com/pulumi/pulumi-terraform-bridge/x/muxer v0.0.4 // indirect
 	github.com/pulumi/pulumi-yaml v1.1.1 // indirect
-	github.com/pulumi/pulumi/pkg/v3 v3.66.0 // indirect
+	github.com/pulumi/pulumi/pkg/v3 v3.68.0 // indirect
 	github.com/pulumi/schema-tools v0.1.2 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect

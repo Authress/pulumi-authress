@@ -26,5 +26,22 @@ cd provider && go mod tidy
 Blocked on https://github.com/pulumi/pulumi-terraform-bridge/issues/956
 
 ```sh
-make tfgen
+export VERSION=v1.1.1; make tfgen
+make provider
+make build_nodejs
 ```
+
+### Run an example
+
+```sh
+export PATH="bin/pulumi-resource-authress:$PATH"
+make install_nodejs_sdk
+cd examples/typescript-example
+yarn
+yarn link @pulumi/authress
+```
+
+1. Configure any necessary environment variables for authentication, e.g `$AUTHRESS_KEY`, in your local environment.
+1. Ensure the program runs successfully via `pulumi up`.
+1. Once the program completes successfully, verify the resource was created in the provider's UI.
+1. Destroy any resources created by the program via `pulumi destroy`.
