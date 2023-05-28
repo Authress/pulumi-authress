@@ -34,7 +34,7 @@ make build_nodejs
 ### Run an example
 
 ```sh
-export PATH="bin/pulumi-resource-authress:$PATH"
+export PATH="/home/$USER/git/authress/sdk/pulumi/bin:$PATH"
 make install_nodejs_sdk
 cd examples/typescript-example
 yarn

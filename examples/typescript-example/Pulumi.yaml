@@ -1,0 +1,3 @@
+name: typescript-example
+runtime: nodejs
+description: An Authress example using Pulumi
