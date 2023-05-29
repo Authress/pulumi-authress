@@ -229,7 +229,7 @@ snapshot:
 To build the provider for the combination of architectures and operating systems, you can run the following CLI command:
 
 ```bash
-goreleaser build --rm-dist --skip-validate
+goreleaser build --clean --skip-validate
 ```
 
 That will ensure that a list of binaries are available to use:

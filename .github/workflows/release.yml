@@ -2,8 +2,8 @@ name: release
 on:
   push:
     tags:
-      - do_not_run
-      # - v*.*.*
+      # - do_not_run
+      - v*.*.*
 env:
   # THIS GITHUB_TOKEN IS A REQUIREMENT TO BE ABLE TO WRITE TO GH RELEASES
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,7 +34,7 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v3
     - name: Unshallow clone for tags
-      run: git fetch --prune --unshallow
+      run: git fetch --prune --unshallow --tags
     - name: Install Go
       uses: actions/setup-go@v3
       with:
@@ -48,7 +48,7 @@ jobs:
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v2
       with:
-        args: -p 3 release --rm-dist
+        args: -p 3 release --clean
         version: latest
       env:
         GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}

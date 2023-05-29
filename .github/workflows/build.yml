@@ -50,16 +50,5 @@ jobs:
     - name: Create Github Release and Tag
       if: github.repository_owner == 'Authress' && github.ref != 'refs/heads/main' && github.event_name == 'push'
       run: |
-        git tag v${GITHUB_REF/refs\/heads\/release\//}.$GITHUB_RUN_NUMBER -f
-        git push origin v${GITHUB_REF/refs\/heads\/release\//}.$GITHUB_RUN_NUMBER
-
-    - name: Set PreRelease Version
-      run: echo "GORELEASER_CURRENT_TAG=v${VERSION}" >> $GITHUB_ENV
-    - name: Run GoReleaser
-      uses: goreleaser/goreleaser-action@v2
-      with:
-        args: -p 3 release --rm-dist
-        version: latest
-      env:
-        GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        git tag v${VERSION} -f
+        git push origin v${VERSION}
