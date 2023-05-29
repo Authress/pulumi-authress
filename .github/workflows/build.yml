@@ -11,6 +11,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GOPATH: ${{ github.workspace }}/provider/cmd
 
 jobs:
   build:
@@ -24,17 +25,17 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
-        go-version: 1.20
+        go-version: 1.20.x
     
     - name: Install pulumictl
-      uses: jaxxstorm/action-install-gh-release@v1.5.0
+      uses: jaxxstorm/action-install-gh-release@c5ead9a448b4660cf1e7866ee22e4dc56538031a # v1.10.0
       with:
         repo: pulumi/pulumictl
     - name: Install Pulumi CLI
       uses: pulumi/action-install-pulumi-cli@v2
     - name: Install Schema Tools
       if: github.event_name == 'pull_request'
-      uses: jaxxstorm/action-install-gh-release@v1.5.0
+      uses: jaxxstorm/action-install-gh-release@c5ead9a448b4660cf1e7866ee22e4dc56538031a # v1.10.0
       with:
         repo: pulumi/schema-tools
 
@@ -51,3 +52,14 @@ jobs:
       run: |
         git tag v${GITHUB_REF/refs\/heads\/release\//}.$GITHUB_RUN_NUMBER -f
         git push origin v${GITHUB_REF/refs\/heads\/release\//}.$GITHUB_RUN_NUMBER
+
+    - name: Set PreRelease Version
+      run: echo "GORELEASER_CURRENT_TAG=v${VERSION}" >> $GITHUB_ENV
+    - name: Run GoReleaser
+      uses: goreleaser/goreleaser-action@v2
+      with:
+        args: -p 3 release --rm-dist
+        version: latest
+      env:
+        GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

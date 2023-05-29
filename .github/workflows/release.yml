@@ -2,7 +2,8 @@ name: release
 on:
   push:
     tags:
-      - v*.*.*
+      - do_not_run
+      # - v*.*.*
 env:
   # THIS GITHUB_TOKEN IS A REQUIREMENT TO BE ABLE TO WRITE TO GH RELEASES
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,7 +40,7 @@ jobs:
       with:
         go-version: ${{matrix.goversion}}
     - name: Install pulumictl
-      uses: jaxxstorm/action-install-gh-release@v1.5.0
+      uses: jaxxstorm/action-install-gh-release@c5ead9a448b4660cf1e7866ee22e4dc56538031a # v1.10.0
       with:
         repo: pulumi/pulumictl
     - name: Set PreRelease Version
