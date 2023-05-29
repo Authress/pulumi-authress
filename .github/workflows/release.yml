@@ -2,8 +2,9 @@ name: release
 on:
   push:
     tags:
-      # - do_not_run
-      - v*.*.*
+      - do_not_run
+      # This never works: https://github.com/orgs/community/discussions/27028
+      # - v*.*.*
 env:
   # THIS GITHUB_TOKEN IS A REQUIREMENT TO BE ABLE TO WRITE TO GH RELEASES
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -41,8 +41,10 @@ jobs:
 
     - name: Build
       run: |
-        export VERSION=`echo $GITHUB_REF | sed -e "s/refs\/heads\///g" -e "s/release\///g"`
+        export VERSION=`echo $GITHUB_REF | sed -e "s/refs\/heads\///g" -e "s/release\/\|main//g"`
         export VERSION="$VERSION.$GITHUB_RUN_NUMBER"
+        echo "VERSION=${VERSION}" >> $GITHUB_ENV
+        echo "GORELEASER_CURRENT_TAG=v${VERSION}" >> $GITHUB_ENV
         # sed -i "s/0.0.0/${VERSION}/g" src/version.go
         make tfgen
         make provider
@@ -52,3 +54,13 @@ jobs:
       run: |
         git tag v${VERSION} -f
         git push origin v${VERSION}
+
+    - name: Run GoReleaser
+      if: github.repository_owner == 'Authress' && github.ref != 'refs/heads/main' && github.event_name == 'push'
+      uses: goreleaser/goreleaser-action@f82d6c1c344bcacabba2c841718984797f664a6b # v4.2.0
+      with:
+        args: -p 3 release --clean
+        version: latest
+      env:
+        GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
