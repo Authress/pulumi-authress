@@ -55,6 +55,13 @@ jobs:
         git tag v${VERSION} -f
         git push origin v${VERSION}
 
+
+    - name: Import GPG key
+      id: import_gpg
+      uses: crazy-max/ghaction-import-gpg@v5
+      with:
+        gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}
     - name: Run GoReleaser
       if: github.repository_owner == 'Authress' && github.ref != 'refs/heads/main' && github.event_name == 'push'
       uses: goreleaser/goreleaser-action@f82d6c1c344bcacabba2c841718984797f664a6b # v4.2.0
@@ -64,3 +71,8 @@ jobs:
       env:
         GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: List all files (on failure)
+      if: failure()
+      run: |
+        ls -alR
