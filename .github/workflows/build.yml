@@ -18,6 +18,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    # Used for pulumictl to calculate the correct tags :(
+    - name: Unshallow clone for tags
+      run: git fetch --prune --unshallow --tags
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
@@ -27,6 +30,13 @@ jobs:
       uses: jaxxstorm/action-install-gh-release@v1.5.0
       with:
         repo: pulumi/pulumictl
+    - name: Install Pulumi CLI
+      uses: pulumi/action-install-pulumi-cli@v2
+    - name: Install Schema Tools
+      if: github.event_name == 'pull_request'
+      uses: jaxxstorm/action-install-gh-release@v1.5.0
+      with:
+        repo: pulumi/schema-tools
 
     - name: Build
       run: |
@@ -41,34 +51,3 @@ jobs:
       run: |
         git tag v${GITHUB_REF/refs\/heads\/release\//}.$GITHUB_RUN_NUMBER -f
         git push origin v${GITHUB_REF/refs\/heads\/release\//}.$GITHUB_RUN_NUMBER
-
-  goreleaser:
-    if: github.repository_owner == 'Authress' && github.ref != 'refs/heads/main' && github.event_name == 'push'
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Unshallow
-        run: git fetch --prune --unshallow
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.20
-      - name: Import GPG key
-        id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@e37acbdf6e46d8be3f11008297e2964d5f68adef
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-      - name: List keys
-        run: gpg -K
-
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v2
-        with:
-          version: latest
-          args: release --clean
-        env:
-          GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
