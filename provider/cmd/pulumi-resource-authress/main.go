@@ -3,11 +3,9 @@
 package main
 
 import (
-	"fmt"
 	"context"
 	_ "embed"
 
-	"github.com/Authress/pulumi-authress/provider/pkg/version"
 	authressPulumi "github.com/Authress/pulumi-authress/provider"
 	tfbridge "github.com/pulumi/pulumi-terraform-bridge/pf/tfbridge"
 )
@@ -23,8 +21,6 @@ func main() {
 		PackageSchema:  pulumiSchema,
 		BridgeMetadata: bridgeMetadata,
 	}
-
-	fmt.Println("Authress Package Version:\t", version.Version)
 
 	tfbridge.Main(context.Background(), "authress", authressPulumi.Provider(), meta)
 }
