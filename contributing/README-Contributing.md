@@ -27,20 +27,21 @@ go mod tidy
 Blocked on https://github.com/pulumi/pulumi-terraform-bridge/issues/956
 
 ```sh
-export VERSION=v1.1.1
+export VERSION=v1.1.28
 export PATH="/home/$USER/git/authress/sdk/pulumi:/home/$USER/git/authress/sdk/pulumi/bin:/home/$USER/git/authress/sdk/pulumi/provider/cmd:$PATH"
 make tfgen
 make provider
 make build_nodejs
+make install_nodejs_sdk
 ```
 
 ### Run an example
 
 ```sh
-make install_nodejs_sdk
 cd examples/typescript-example
 yarn
 yarn link @pulumi/authress
+pulumi up
 ```
 
 1. Configure any necessary environment variables for authentication, e.g `$AUTHRESS_KEY`, in your local environment.

@@ -42,9 +42,9 @@ jobs:
     - name: Build
       run: |
         export VERSION=`echo $GITHUB_REF | sed -e "s/refs\/heads\///g" -e "s/release\/\|main//g"`
-        export VERSION="$VERSION.$GITHUB_RUN_NUMBER"
+        export VERSION="v${VERSION}.$GITHUB_RUN_NUMBER"
         echo "VERSION=${VERSION}" >> $GITHUB_ENV
-        echo "GORELEASER_CURRENT_TAG=v${VERSION}" >> $GITHUB_ENV
+        echo "GORELEASER_CURRENT_TAG=${VERSION}" >> $GITHUB_ENV
         # sed -i "s/0.0.0/${VERSION}/g" src/version.go
         make tfgen
         make provider
@@ -52,8 +52,8 @@ jobs:
     - name: Create Github Release and Tag
       if: github.repository_owner == 'Authress' && github.ref != 'refs/heads/main' && github.event_name == 'push'
       run: |
-        git tag v${VERSION} -f
-        git push origin v${VERSION}
+        git tag ${VERSION} -f
+        git push origin ${VERSION}
 
 
     - name: Import GPG key
