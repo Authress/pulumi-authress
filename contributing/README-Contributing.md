@@ -27,7 +27,7 @@ go mod tidy
 Blocked on https://github.com/pulumi/pulumi-terraform-bridge/issues/956
 
 ```sh
-export VERSION=v1.1.30
+export VERSION=v1.1.31
 export PATH="/home/$USER/git/authress/sdk/pulumi:/home/$USER/git/authress/sdk/pulumi/bin:/home/$USER/git/authress/sdk/pulumi/provider/cmd:$PATH"
 make tfgen
 make provider
