@@ -42,7 +42,7 @@ func Provider() pf.ProviderInfo {
 		PluginDownloadURL: "github://api.github.com/Authress/pulumi-authress",
 		Description:       "A Pulumi package for creating and managing Authress resources.",
 		// https://www.pulumi.com/docs/guides/pulumi-packages/schema/#package.
-		Keywords:   []string{"pulumi", "authress", "category/cloud", "authorization", "authentication"},
+		Keywords:   []string{"pulumi", "authress", "category/cloud", "authorization", "authentication", "access control", "policies", "api"},
 		License:    "Apache-2.0",
 		Homepage:   "https://authress.io",
 		Repository: "https://github.com/Authress/pulumi-authress",
@@ -57,6 +57,11 @@ func Provider() pf.ProviderInfo {
 			// "accessKey": {
 			// 	Default: &tfbridge.DefaultInfo{EnvVars: []string{"AUTHRESS_KEY"}},
 			// },
+
+			// There is something likely broken with the PF bridge so this kep needs to be added here
+			"pluginDownloadURL": {
+				Default: &tfbridge.DefaultInfo{},
+			},
 		},
 
 		MetadataInfo: tfbridge.NewProviderMetadata(metadata),

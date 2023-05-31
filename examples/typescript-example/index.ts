@@ -8,11 +8,11 @@ import * as Authress from "@pulumi/authress";
 // pulumi config set --secret authress:accessKey $AUTHRESS_KEY
 //
 // const authress = new Authress.Provider("authress", {
-//     // Your Authress custom domain. [Configured a custom domain for Account](https://authress.io/app/#/settings?focus=domain)
+//     // Your Authress custom domain. [Configure a custom domain for your Authress account](https://authress.io/app/#/settings?focus=domain)
 //     // * Or use [provided domain](https://authress.io/app/#/api?route=overview).
 //     customDomain: '',
     
-//     // The access key for the Authress API. Should be [configured by your CI/CD](https://authress.io/knowledge-base/docs/category/cicd) for more information.
+//     // The access key for the Authress API. Should be [configured by your CI/CD](https://authress.io/knowledge-base/docs/category/cicd) automatically.
 //     // * Or it can be overridden directly here. Do not commit this plaintext value to your source code.
 //     accessKey: process.env.AUTHRESS_KEY || ''
 // });

@@ -9,7 +9,8 @@ The Authress provider must be configured with credentials to deploy and update r
 
 ## Example
 
-{{< chooser language "typescript,python,go,csharp" >}}
+{{< chooser language "typescript,javascript,python,go,csharp" >}}
+
 {{% choosable language typescript %}}
 
 ```typescript
@@ -29,6 +30,29 @@ const authressRole = new Authress.Role("TestRole", {
 });
 
 export let authressTestRoleId = authressRole.roleId;
+```
+
+{{% /choosable %}}
+
+{{% choosable language javascript %}}
+
+```javascript
+const pulumi = require("@pulumi/pulumi");
+const Authress = require("@pulumi/authress");
+
+
+const authressRole = new Authress.Role("TestRole", {
+    roleId: 'test-role',
+    name: "Test Role",
+    description: "An example description for this Role",
+    permissions: {
+        "documents:read": {
+            allow: true
+        }
+    }
+});
+
+module.exports.authressTestRoleId = authressRole.roleId;
 ```
 
 {{% /choosable %}}

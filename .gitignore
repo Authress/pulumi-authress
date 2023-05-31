@@ -25,8 +25,4 @@ ci-scripts
 **/schema.go
 **/schema-embed.json
 
-sdk/java/build
-sdk/java/.gradle
-sdk/java/gradle
-sdk/java/gradlew
-sdk/java/gradlew.bat
+sdk
