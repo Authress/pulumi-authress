@@ -49,6 +49,10 @@ jobs:
         make tfgen
         make provider
 
+        # the schema.json is read by pulumi directly from the repo, so it has to be there, and it can be updated dynamically by everything, so we really don't want it present otherwise
+        # So we'll generate it during the build and then commit it.
+        git add provider/cmd/pulumi-resource-authress/schema.json && git commit -m"Committing updated schema.json" || echo "schema.json is up to date."
+
     - name: Create Github Release and Tag
       if: github.repository_owner == 'Authress' && github.ref != 'refs/heads/main' && github.event_name == 'push'
       run: |
