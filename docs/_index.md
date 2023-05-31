@@ -83,7 +83,7 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		authressRole, err := Authress.Role(ctx, "sks-cluster", &Authress.RoleArgs{
+		authressRole, err := Authress.Role(ctx, "TestRole", &Authress.RoleArgs{
 			RoleId: pulumi.String("test-role"),
             Name: pulumi.String("Test Role"),
 		})
@@ -95,6 +95,24 @@ func main() {
 	})
 }
 ```
+
+{{% /choosable %}}
+
+{{% choosable language go %}}
+
+```csharp
+
+using Pulumi;
+using Authress = Pulumi.Authress;
+
+await Deployment.RunAsync(() =>
+{
+    var role = new Authress.Role("TestRole", new Authress.RoleArgs
+    {
+        RoleId = "test-role",
+        Name = "Test Role"
+    });
+});
 
 {{% /choosable %}}
 
