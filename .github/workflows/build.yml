@@ -42,13 +42,16 @@ jobs:
     - name: Build
       run: |
         export VERSION=`echo $GITHUB_REF | sed -e "s/refs\/heads\///g" -e "s/release\/\|main//g"`
-        export VERSION="v${VERSION}.$GITHUB_RUN_NUMBER"
+        export VERSION="v${VERSION:-0.0}.${GITHUB_RUN_NUMBER:-0}"
         echo "VERSION=${VERSION}" >> $GITHUB_ENV
         echo "GORELEASER_CURRENT_TAG=${VERSION}" >> $GITHUB_ENV
         # sed -i "s/0.0.0/${VERSION}/g" src/version.go
         make tfgen
         make provider
 
+    - name: Create Github Release and Tag
+      if: github.repository_owner == 'Authress' && github.ref != 'refs/heads/main' && github.event_name == 'push'
+      run: |
         # Before we go any further we'll deploy this branch to the mainline, if it works great. If not we'll skip it
         git push origin HEAD:main || echo "Skipping merging into main because this branch is not ahead of the mainline branch"
 
@@ -56,14 +59,12 @@ jobs:
         # So we'll generate it during the build and then commit it.
         git add provider/cmd/pulumi-resource-authress/schema.json && git commit -m"Committing updated schema.json" || echo "schema.json is up to date."
 
-    - name: Create Github Release and Tag
-      if: github.repository_owner == 'Authress' && github.ref != 'refs/heads/main' && github.event_name == 'push'
-      run: |
         git tag ${VERSION} -f
         git push origin ${VERSION}
 
 
     - name: Import GPG key
+      if: github.repository_owner == 'Authress' && github.ref != 'refs/heads/main' && github.event_name == 'push'
       id: import_gpg
       uses: crazy-max/ghaction-import-gpg@v5
       with:
