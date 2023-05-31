@@ -61,7 +61,7 @@ dotnet add package Pulumi.Authress
 The following configuration points are available for the `Authress` provider:
 
 - `authress:accessKey` - The access key for the Authress API. Should be [configured by your CI/CD](https://authress.io/knowledge-base/docs/category/cicd) automatically. Or it can be overridden directly here. Do not commit this plaintext value to your source code.
-- `authress:customDomain` - Your Authress custom domain. [Configure a custom domain for your Authress account](https://authress.io/app/#/settings?focus=domain) or use [provided domain](https://authress.io/app/#/api?route=overview).
+- `authress:customDomain` - Your Authress custom domain. [Configure a custom domain for your Authress account](https://authress.io/app/#/settings?focus=domain) or use the [provided domain](https://authress.io/app/#/api?route=overview).
 
 ## Reference Examples
 

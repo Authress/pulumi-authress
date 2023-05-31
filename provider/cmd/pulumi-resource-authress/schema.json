@@ -64,12 +64,12 @@
         "variables": {
             "accessKey": {
                 "type": "string",
-                "description": "The access key for the Authress API. Should be [configured by your\nCI/CD](https://authress.io/knowledge-base/docs/category/cicd) for more information.\n",
+                "description": "The access key for the Authress API. Should be [configured by your\nCI/CD](https://authress.io/knowledge-base/docs/category/cicd) automatically.\n",
                 "secret": true
             },
             "customDomain": {
                 "type": "string",
-                "description": "Your Authress custom domain. [Configured a custom domain for Account](https://authress.io/app/#/settings?focus=domain)\nor use [provided domain](https://authress.io/app/#/api?route=overview).\n"
+                "description": "Your Authress custom domain. [Configure a custom domain for Authress\naccount](https://authress.io/app/#/settings?focus=domain) or use the [provided\ndomain](https://authress.io/app/#/api?route=overview).\n"
             }
         },
         "defaults": [
@@ -106,12 +106,12 @@
         "properties": {
             "accessKey": {
                 "type": "string",
-                "description": "The access key for the Authress API. Should be [configured by your\nCI/CD](https://authress.io/knowledge-base/docs/category/cicd) for more information.\n",
+                "description": "The access key for the Authress API. Should be [configured by your\nCI/CD](https://authress.io/knowledge-base/docs/category/cicd) automatically.\n",
                 "secret": true
             },
             "customDomain": {
                 "type": "string",
-                "description": "Your Authress custom domain. [Configured a custom domain for Account](https://authress.io/app/#/settings?focus=domain)\nor use [provided domain](https://authress.io/app/#/api?route=overview).\n"
+                "description": "Your Authress custom domain. [Configure a custom domain for Authress\naccount](https://authress.io/app/#/settings?focus=domain) or use the [provided\ndomain](https://authress.io/app/#/api?route=overview).\n"
             }
         },
         "required": [
@@ -120,12 +120,12 @@
         "inputProperties": {
             "accessKey": {
                 "type": "string",
-                "description": "The access key for the Authress API. Should be [configured by your\nCI/CD](https://authress.io/knowledge-base/docs/category/cicd) for more information.\n",
+                "description": "The access key for the Authress API. Should be [configured by your\nCI/CD](https://authress.io/knowledge-base/docs/category/cicd) automatically.\n",
                 "secret": true
             },
             "customDomain": {
                 "type": "string",
-                "description": "Your Authress custom domain. [Configured a custom domain for Account](https://authress.io/app/#/settings?focus=domain)\nor use [provided domain](https://authress.io/app/#/api?route=overview).\n"
+                "description": "Your Authress custom domain. [Configure a custom domain for Authress\naccount](https://authress.io/app/#/settings?focus=domain) or use the [provided\ndomain](https://authress.io/app/#/api?route=overview).\n"
             }
         },
         "requiredInputs": [
