@@ -4,13 +4,19 @@
     "description": "A Pulumi package for creating and managing Authress resources.",
     "keywords": [
         "pulumi",
+        "auth",
         "authress",
         "category/cloud",
         "authorization",
         "authentication",
         "access control",
         "policies",
-        "api"
+        "api",
+        "users",
+        "identity",
+        "security",
+        "IAM",
+        "CIAM"
     ],
     "homepage": "https://authress.io",
     "license": "Apache-2.0",

@@ -42,7 +42,7 @@ func Provider() pf.ProviderInfo {
 		PluginDownloadURL: "github://api.github.com/Authress/pulumi-authress",
 		Description:       "A Pulumi package for creating and managing Authress resources.",
 		// https://www.pulumi.com/docs/guides/pulumi-packages/schema/#package.
-		Keywords:   []string{"pulumi", "authress", "category/cloud", "authorization", "authentication", "access control", "policies", "api"},
+		Keywords:   []string{"pulumi", "auth", "authress", "category/cloud", "authorization", "authentication", "access control", "policies", "api", "users", "identity", "security", "IAM", "CIAM"},
 		License:    "Apache-2.0",
 		Homepage:   "https://authress.io",
 		Repository: "https://github.com/Authress/pulumi-authress",
